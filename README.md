@@ -28,4 +28,4 @@ assets/og.png       preview image for links shared on social media
 - **Colours:** the tokens at the top of `assets/styles.css` (`--accent`, `--c1` … `--c5`).
 - **Preview:** open `index.html` in a browser, or run `python -m http.server` in this folder and visit http://localhost:8000.
 
-Changes pushed to `main` go live within a minute or two.
+Changes pushed to `main` go live within a minute or two. When you change `styles.css` or `main.js`, also raise the number in `?v=3` where `index.html` links them (for example to `?v=4`). Otherwise browsers can keep the old file for up to 10 minutes.
