@@ -28,7 +28,6 @@
     "hero.lead": "Estudio microbiología en la Universidad de Antioquia y uso Python y R para leer lo que una infección deja escrito en la sangre.",
     "hero.cta": "Ver mi investigación",
     "hero.meta": "Medellín, Colombia · Español e inglés",
-    "hero.caption": "fig. 0 — un embedding celular simulado · decoración, no datos",
 
     "about.title": "Sobre mí",
     "about.p1": "Soy estudiante de Microbiología y Bioanálisis en la Universidad de Antioquia, en Medellín, Colombia. Me atrae el punto donde el laboratorio se encuentra con el computador: usar datos públicos y código reproducible para entender cómo responde el cuerpo a una infección.",

@@ -254,11 +254,6 @@ p { margin: 0; }
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
-.hero__caption {
-  position: absolute; right: 24px; bottom: 20px;
-  font: 400 11px/1.4 var(--font-mono); color: var(--muted); letter-spacing: 0.02em;
-}
-
 /* ---------- sections ---------- */
 
 .section { padding: 112px 0; }
@@ -526,7 +521,6 @@ p { margin: 0; }
   .hero__canvas { opacity: 0.38; }
   .hero::before { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 55%, transparent), color-mix(in srgb, var(--bg) 80%, transparent)); }
   .hero__inner { padding-top: 64px; padding-bottom: 88px; }
-  .hero__caption { right: 16px; left: 16px; text-align: right; }
 
   .section { padding: 80px 0; }
   .section__title { margin-bottom: 28px; }
