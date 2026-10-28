@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gabriel Leon · Computational Biology Lab</title>
+  <meta name="description" content="Gabriel Leon — Microbiology and Bioanalysis student at the University of Antioquia, working on bioinformatics and AI for infectious disease.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f7f7f3">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lab.css?v=4">
+  <script>
+    (function () {
+      var get = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
+      var theme = get("theme") === "dark" ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+      var lang = get("lang") || ((navigator.language || "en").toLowerCase().indexOf("es") === 0 ? "es" : "en");
+      document.documentElement.lang = lang;
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a class="brand" href="#top" aria-label="Gabriel Leon, home">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <path class="hex" d="M20 2 L36 11 L36 29 L20 38 L4 29 L4 11 Z"/>
+          <path class="helix-a" d="M14 10 C26 15, 14 25, 26 30"/>
+          <path class="helix-b" d="M26 10 C14 15, 26 25, 14 30"/>
+        </svg>
+        <span class="brand__name">Gabriel Leon<span class="brand__lab"> / lab</span></span>
+      </a>
+
+      <nav class="nav__links" id="nav-links" aria-label="Main">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#research" data-i18n="nav.research">Research</a>
+        <a href="#ai" data-i18n="nav.ai">AI × Bio</a>
+        <a href="#toolkit" data-i18n="nav.toolkit">Toolkit</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="nav__actions">
+        <span class="status" aria-hidden="true"><span class="status__dot"></span><span data-i18n="nav.status">pipeline running</span></span>
+        <button class="chip-btn" id="lang-toggle" type="button" aria-label="Cambiar a español"><span data-lang-label>ES</span></button>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+        </button>
+        <button class="icon-btn nav__menu" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow"><span class="eyebrow__tag">// </span><span data-i18n="hero.eyebrow">computational biology · AI · infection</span></p>
+          <h1 class="hero__title" id="hero-title">Gabriel<br>Leon</h1>
+          <p class="typed" aria-live="off"><span class="typed__prompt">&gt;</span> <span id="typed"></span><span class="typed__cursor" aria-hidden="true"></span></p>
+          <p class="hero__lead" data-i18n="hero.lead">Microbiology student at the University of Antioquia, writing Python and R to read the host's response to infection in public transcriptomic data — and moving toward AI for biology.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#research" data-i18n="hero.cta">Open the lab notebook</a>
+            <a class="btn btn--ghost" href="https://github.com/gabrielleondev" rel="me">
+              <svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              GitHub
+            </a>
+          </div>
+          <ul class="specimen" aria-label="Quick facts">
+            <li><span>LOC</span>Medellín, CO</li>
+            <li><span>UNI</span>UdeA</li>
+            <li><span>LANG</span>ES · EN</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual">
+          <div class="scope">
+            <span class="scope__corner scope__corner--tl" aria-hidden="true"></span>
+            <span class="scope__corner scope__corner--tr" aria-hidden="true"></span>
+            <span class="scope__corner scope__corner--bl" aria-hidden="true"></span>
+            <span class="scope__corner scope__corner--br" aria-hidden="true"></span>
+            <canvas id="helix" aria-label="Animated DNA double helix" role="img"></canvas>
+            <div class="scope__hud" aria-hidden="true">
+              <span><b data-i18n="hud.pos">pos</b> <i id="hud-pos">0001</i></span>
+              <span><b data-i18n="hud.pair">pair</b> <i id="hud-pair">A–T</i></span>
+              <span><b>GC</b> <i id="hud-gc">50%</i></span>
+            </div>
+            <p class="scope__hint" data-i18n="hero.hint">hover to unzip the strands</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEQUENCE RIBBON -->
+    <div class="ribbon" aria-hidden="true">
+      <div class="ribbon__track" id="ribbon"></div>
+      <div class="ribbon__read"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap grid-2">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_01 | about</p>
+          <h2 class="sec-title" id="about-title" data-i18n="about.title">About</h2>
+        </header>
+        <div class="reveal">
+          <p class="prose" data-i18n="about.p1">I'm a Microbiology and Bioanalysis student at the University of Antioquia in Medellín, Colombia. What pulls me in is the space where the lab bench meets the computer: using public data and reproducible code to ask how the body responds to infection.</p>
+          <p class="prose" data-i18n="about.p2">Alongside my studies I've worked in data quality and bilingual support, reviewing hundreds of cases a day against detailed rules. That habit of checking every record carefully is the same one I bring to analysis.</p>
+
+          <div class="label-card">
+            <div class="label-card__head">
+              <span data-i18n="about.sample">SAMPLE</span>
+              <span>GL-2026-MED</span>
+            </div>
+            <dl class="label-card__grid">
+              <div><dt data-i18n="about.f1k">Studying</dt><dd data-i18n="about.f1v">B.Sc. Microbiology &amp; Bioanalysis, University of Antioquia (in progress)</dd></div>
+              <div><dt data-i18n="about.f2k">Based in</dt><dd>Medellín, Colombia</dd></div>
+              <div><dt data-i18n="about.f3k">Languages</dt><dd data-i18n="about.f3v">Spanish (native) · English (C1)</dd></div>
+              <div><dt data-i18n="about.f4k">Interests</dt><dd data-i18n="about.f4v">Host–pathogen transcriptomics, infectious disease, AI in biology</dd></div>
+            </dl>
+            <svg class="barcode" id="barcode" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="section section--grid" id="research" aria-labelledby="research-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_02 | research</p>
+          <h2 class="sec-title" id="research-title" data-i18n="research.title">Research</h2>
+        </header>
+
+        <article class="panel reveal">
+          <div class="panel__bar">
+            <span class="pill"><span class="pulse" aria-hidden="true"></span><span data-i18n="research.status">In progress</span></span>
+            <span class="panel__file">ifn_tb_leishmaniasis.ipynb</span>
+          </div>
+
+          <div class="panel__body">
+            <div>
+              <h3 class="panel__title" data-i18n="research.ptitle">Type I interferon in tuberculosis and cutaneous leishmaniasis</h3>
+              <p class="prose" data-i18n="research.p1">Two very different infections share one host cell: the macrophage. This project asks which parts of the type I interferon response in blood are common to tuberculosis and cutaneous leishmaniasis, which are specific to each disease, and whether that response follows the outcome of treatment.</p>
+              <p class="prose" data-i18n="research.p2">The first phase reanalyses public tuberculosis cohorts. Every cohort is scored on its own, and every finding is re-tested in independent studies before it counts.</p>
+              <ul class="tags" aria-label="Tools">
+                <li>Python</li><li>R</li><li>pandas</li><li>scikit-learn</li><li>ggplot2</li><li>pROC</li><li>MSigDB</li>
+              </ul>
+            </div>
+
+            <figure class="heatmap">
+              <canvas id="heatmap" role="img" aria-label="Animated gene-expression heatmap that clusters itself"></canvas>
+              <figcaption><span id="heatmap-state" data-i18n="research.hmShuffled">samples shuffled</span><span class="heatmap__axis" data-i18n="research.hmAxis">genes × samples</span></figcaption>
+            </figure>
+          </div>
+
+          <ol class="flow" aria-label="Analysis pipeline">
+            <li><span class="flow__n">01</span><b data-i18n="research.s1t">Public cohorts</b><span data-i18n="research.s1d">RNA-seq and microarray data from NCBI GEO</span></li>
+            <li><span class="flow__n">02</span><b data-i18n="research.s2t">Gene-set scores</b><span data-i18n="research.s2d">z-scores within each cohort, never pooled across studies</span></li>
+            <li><span class="flow__n">03</span><b data-i18n="research.s3t">Diagnostic performance</b><span data-i18n="research.s3d">ROC curves with bootstrap confidence intervals</span></li>
+            <li><span class="flow__n">04</span><b data-i18n="research.s4t">Independent validation</b><span data-i18n="research.s4d">Each result checked again in separate cohorts</span></li>
+          </ol>
+
+          <p class="panel__note">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <span data-i18n="research.note">Reproducible in both Python and R. The repository is private for now, until the results are published.</span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- AI x BIO -->
+    <section class="section" id="ai" aria-labelledby="ai-title">
+      <div class="wrap grid-2 grid-2--ai">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_03 | ai × bio</p>
+          <h2 class="sec-title" id="ai-title" data-i18n="ai.title">AI × Biology</h2>
+          <p class="prose reveal" data-i18n="ai.p1">Where I'm heading: machine learning on biological data. Expression profiles are thousands of measurements per patient — the kind of signal models are good at, as long as every result is validated as carefully as in the lab.</p>
+          <ul class="checklist reveal">
+            <li data-i18n="ai.l1">Classifiers built on gene signatures</li>
+            <li data-i18n="ai.l2">Honest validation across independent cohorts</li>
+            <li data-i18n="ai.l3">Models that a biologist can read and question</li>
+          </ul>
+        </header>
+        <figure class="net reveal">
+          <canvas id="network" role="img" aria-label="Animated neural network with signals flowing from genes to phenotype"></canvas>
+          <figcaption>
+            <span data-i18n="ai.in">genes</span>
+            <span data-i18n="ai.hidden">hidden layers</span>
+            <span data-i18n="ai.out">phenotype</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section section--grid" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_04 | projects</p>
+          <h2 class="sec-title" id="projects-title" data-i18n="projects.title">Other projects</h2>
+        </header>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card__art" aria-hidden="true">
+              <div class="cube">
+                <span class="cube__face cube__face--f"></span><span class="cube__face cube__face--b"></span>
+                <span class="cube__face cube__face--l"></span><span class="cube__face cube__face--r"></span>
+                <span class="cube__face cube__face--t"></span><span class="cube__face cube__face--d"></span>
+              </div>
+              <span class="card__light"></span>
+            </div>
+            <div class="card__body">
+              <h3 class="card__title">OpenGL World Editor</h3>
+              <p class="card__text" data-i18n="projects.ogl">A 3D scene editor written in Python with OpenGL. It loads .obj models with textures and vertex colours, moves them with on-screen gizmos, adds coloured lights, and lets you fly through the scene with an FPS camera. Scenes save to JSON so other programs can load them.</p>
+              <ul class="tags tags--sm"><li>Python</li><li>OpenGL</li><li data-i18n="projects.tag3d">3D graphics</li></ul>
+              <a class="link-arrow" href="https://github.com/gabrielleondev/OpenGL-WIII-Editor"><span data-i18n="projects.view">View on GitHub</span> <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+          <article class="card card--soon reveal">
+            <div class="card__body">
+              <p class="card__code">$ git log --oneline<br><span>…</span></p>
+              <h3 class="card__title" data-i18n="projects.soonTitle">More on the way</h3>
+              <p class="card__text" data-i18n="projects.soon">New analyses and tools will show up here as I publish them on GitHub.</p>
+              <a class="link-arrow" href="https://github.com/gabrielleondev?tab=repositories"><span data-i18n="projects.all">All repositories</span> <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLKIT: periodic table -->
+    <section class="section" id="toolkit" aria-labelledby="toolkit-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_05 | toolkit</p>
+          <h2 class="sec-title" id="toolkit-title" data-i18n="toolkit.title">Periodic table of my toolkit</h2>
+        </header>
+        <div class="ptable" id="ptable" role="list"></div>
+        <ul class="plegend" id="plegend" aria-label="Legend"></ul>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section section--grid" id="experience" aria-labelledby="experience-title">
+      <div class="wrap grid-2">
+        <header class="sec-head">
+          <p class="sec-id">&gt;seq_06 | experience</p>
+          <h2 class="sec-title" id="experience-title" data-i18n="exp.title">Experience</h2>
+        </header>
+        <ol class="timeline">
+          <li class="reveal">
+            <span class="timeline__when" data-i18n="exp.w1">2024 – now</span>
+            <div>
+              <h3 class="timeline__role" data-i18n="exp.r1">Content Quality Analyst</h3>
+              <p class="timeline__org">TaskUs Colombia · Medellín</p>
+              <p class="timeline__text" data-i18n="exp.t1">Review 400+ cases a day against detailed client policies, and mentor new analysts.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="timeline__when">2022 – 2024</span>
+            <div>
+              <h3 class="timeline__role" data-i18n="exp.r2">Bilingual Virtual Assistant</h3>
+              <p class="timeline__org" data-i18n="exp.o2">Freelance · Remote</p>
+              <p class="timeline__text" data-i18n="exp.t2">Scheduling, reports and databases for international clients.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="timeline__when">2021 – 2022</span>
+            <div>
+              <h3 class="timeline__role" data-i18n="exp.r3">Customer Service Representative</h3>
+              <p class="timeline__org">Sykes Colombia · Santa Marta</p>
+              <p class="timeline__text" data-i18n="exp.t3">Supported U.S. patients in a HIPAA-regulated health-care setting.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT: petri dish -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <canvas id="petri" class="contact__canvas" aria-hidden="true"></canvas>
+      <div class="wrap contact__inner reveal">
+        <p class="sec-id">&gt;seq_07 | contact</p>
+        <h2 class="contact__title" id="contact-title" data-i18n="contact.title">Let's grow something together.</h2>
+        <p class="contact__text" data-i18n="contact.text">I'm glad to chat about bioinformatics, infection biology, or working together on open-data analyses. GitHub is the best place to find me.</p>
+        <a class="btn btn--primary btn--lg" href="https://github.com/gabrielleondev" rel="me">
+          <svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          @gabrielleondev
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>© <span id="year">2026</span> Gabriel Leon</p>
+      <p class="footer__mono">EOF · <span data-i18n="footer.built">hand-written HTML, CSS and JS · GitHub Pages</span></p>
+      <a href="#top" class="footer__top" data-i18n="footer.top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="lab.js?v=1" defer></script>
+</body>
+</html>
