@@ -145,19 +145,23 @@
   /* ------------------------------------------------------------------
      Tema
      ------------------------------------------------------------------ */
+  // El <head> ya puso data-theme; aquí solo se cambia con el botón o con el sistema
   var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  function isDark() {
-    var t = root.dataset.theme;
-    return t ? t === "dark" : darkQuery.matches;
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    if (embedding) embedding.recolor();
   }
   themeBtn.addEventListener("click", function () {
-    var next = isDark() ? "light" : "dark";
-    root.dataset.theme = next;
+    var next = root.dataset.theme === "dark" ? "light" : "dark";
     store.set("theme", next);
-    if (embedding) embedding.recolor();
+    applyTheme(next);
   });
+  // Si la persona nunca eligió, la página sigue al sistema cuando este cambia
   if (darkQuery.addEventListener) {
-    darkQuery.addEventListener("change", function () { if (embedding) embedding.recolor(); });
+    darkQuery.addEventListener("change", function (e) {
+      var saved = store.get("theme");
+      if (saved !== "light" && saved !== "dark") applyTheme(e.matches ? "dark" : "light");
+    });
   }
 
   /* ------------------------------------------------------------------

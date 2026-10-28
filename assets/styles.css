@@ -33,51 +33,30 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d1015;
-    --bg-tint: #12161d;
-    --surface: #161b23;
-    --ink: #e9ebee;
-    --ink-2: #aab1bc;
-    --muted: #707784;
-    --line: #262d38;
-    --accent: #3fc8aa;
-    --accent-ink: #062520;
-    --accent-soft: rgba(63, 200, 170, 0.12);
-    --coral: #ff8b6e;
-    --indigo: #8e9bff;
-    --amber: #f0b43c;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
-    --c1: #3fc8aa;
-    --c2: #ff8b6e;
-    --c3: #8e9bff;
-    --c4: #f0b43c;
-    --c5: #c39bff;
-    color-scheme: dark;
-  }
-}
-
+/* Modo oscuro: el script del <head> pone data-theme="dark" según la preferencia
+   guardada o la del sistema, así que los colores oscuros se definen una sola vez. */
 :root[data-theme="dark"] {
-  --bg: #0d1015;
-  --bg-tint: #12161d;
-  --surface: #161b23;
-  --ink: #e9ebee;
-  --ink-2: #aab1bc;
-  --muted: #707784;
-  --line: #262d38;
-  --accent: #3fc8aa;
-  --accent-ink: #062520;
-  --accent-soft: rgba(63, 200, 170, 0.12);
-  --coral: #ff8b6e;
-  --indigo: #8e9bff;
-  --amber: #f0b43c;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
-  --c1: #3fc8aa;
-  --c2: #ff8b6e;
-  --c3: #8e9bff;
-  --c4: #f0b43c;
-  --c5: #c39bff;
+  --bg: #0a0d12;
+  --bg-tint: #10151c;
+  --surface: #171e28;
+  --surface-2: #1d2531;
+  --ink: #edeff2;
+  --ink-2: #b6bdc8;
+  --muted: #8b929e;
+  --line: #2a3340;
+  --line-strong: #3a4554;
+  --accent: #4fd6b6;
+  --accent-ink: #04231d;
+  --accent-soft: rgba(79, 214, 182, 0.13);
+  --coral: #ff8f73;
+  --indigo: #95a1ff;
+  --amber: #f3b947;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 1px 2px rgba(0, 0, 0, 0.4), 0 14px 36px rgba(0, 0, 0, 0.45);
+  --c1: #4fd6b6;
+  --c2: #ff8f73;
+  --c3: #95a1ff;
+  --c4: #f3b947;
+  --c5: #c7a2ff;
   color-scheme: dark;
 }
 
@@ -173,10 +152,6 @@ p { margin: 0; }
 .i-moon { display: none; }
 :root[data-theme="dark"] .i-sun { display: none; }
 :root[data-theme="dark"] .i-moon { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .i-sun { display: none; }
-  :root:not([data-theme="light"]) .i-moon { display: block; }
-}
 
 .nav__menu { display: none; }
 
@@ -478,6 +453,65 @@ p { margin: 0; }
 .footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; }
 .footer__top { text-decoration: none; }
 .footer__top:hover { color: var(--ink); }
+
+/* ---------- ajustes propios del modo oscuro ---------- */
+
+/* Logo y botón principal en el color de acento, en vez de un bloque blanco */
+:root[data-theme="dark"] .brand__mark { background: var(--accent); color: var(--accent-ink); }
+:root[data-theme="dark"] .btn--primary { background: var(--accent); color: var(--accent-ink); }
+:root[data-theme="dark"] .btn--primary:hover { background: color-mix(in srgb, var(--accent) 88%, #fff); box-shadow: 0 8px 28px rgba(79, 214, 182, 0.22); }
+:root[data-theme="dark"] .btn--ghost { background: var(--surface); }
+:root[data-theme="dark"] .icon-btn,
+:root[data-theme="dark"] .chip-btn { background: var(--surface); border-color: var(--line); }
+:root[data-theme="dark"] .icon-btn:hover,
+:root[data-theme="dark"] .chip-btn:hover { border-color: var(--line-strong); background: var(--surface-2); }
+:root[data-theme="dark"] .nav__links a:hover { background: var(--surface); }
+
+/* Secciones con fondo alterno: un filo arriba y abajo para que se separen */
+:root[data-theme="dark"] .section--tint { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+/* Tarjetas: más claras que el fondo, con borde visible y un brillo fino arriba */
+:root[data-theme="dark"] .feature,
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .tool,
+:root[data-theme="dark"] .facts { border-color: var(--line-strong); box-shadow: var(--shadow); }
+:root[data-theme="dark"] .facts { background: var(--line-strong); }
+:root[data-theme="dark"] .card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong)); }
+:root[data-theme="dark"] .card--soon { box-shadow: none; border-color: var(--line-strong); }
+:root[data-theme="dark"] .card--soon:hover { border-color: var(--muted); }
+:root[data-theme="dark"] .feature {
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(149, 161, 255, 0.07), transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(79, 214, 182, 0.06), transparent 60%),
+    var(--surface);
+}
+:root[data-theme="dark"] .feature__foot { border-top-color: var(--line-strong); }
+:root[data-theme="dark"] .pipeline__n { background: var(--surface-2); }
+:root[data-theme="dark"] .pipeline::before { opacity: 0.8; }
+
+/* Etiquetas */
+:root[data-theme="dark"] .tags li,
+:root[data-theme="dark"] .section--tint .tags li { background: rgba(255, 255, 255, 0.04); border-color: var(--line-strong); color: var(--ink-2); }
+
+/* Dibujo del editor 3D: cuadrícula de puntos y la luz con un halo más limpio */
+:root[data-theme="dark"] .card__art {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(243, 185, 71, 0.16), transparent 40%),
+    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1.2px) 0 0 / 16px 16px,
+    var(--surface-2);
+  border-bottom-color: var(--line-strong);
+}
+:root[data-theme="dark"] .wire path { stroke: var(--ink-2); opacity: 0.9; }
+
+/* Línea de tiempo */
+:root[data-theme="dark"] .timeline { border-left-color: var(--line-strong); }
+:root[data-theme="dark"] .timeline li::before { background: var(--bg); border-color: var(--line-strong); }
+:root[data-theme="dark"] .timeline li:first-child::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+/* Contacto: un resplandor suave detrás del título */
+:root[data-theme="dark"] .contact {
+  background: radial-gradient(60% 55% at 50% 30%, rgba(79, 214, 182, 0.09), transparent 70%);
+}
 
 /* ---------- reveal on scroll ---------- */
 

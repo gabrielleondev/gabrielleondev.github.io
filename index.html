@@ -27,7 +27,10 @@
     (function () {
       var get = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
       var theme = get("theme");
-      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.dataset.theme = theme;
       var lang = get("lang") || ((navigator.language || "en").toLowerCase().indexOf("es") === 0 ? "es" : "en");
       document.documentElement.lang = lang;
     })();
