@@ -145,10 +145,12 @@
   /* ------------------------------------------------------------------
      Tema
      ------------------------------------------------------------------ */
-  // El <head> ya puso data-theme; aquí solo se cambia con el botón o con el sistema
-  var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  // El <head> ya puso data-theme (claro por defecto); aquí solo cambia con el botón
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
   function applyTheme(theme) {
     root.dataset.theme = theme;
+    // color de la barra del navegador en el celular
+    if (themeMeta) themeMeta.setAttribute("content", theme === "dark" ? "#0a0d12" : "#f6f5f1");
     if (embedding) embedding.recolor();
   }
   themeBtn.addEventListener("click", function () {
@@ -156,13 +158,6 @@
     store.set("theme", next);
     applyTheme(next);
   });
-  // Si la persona nunca eligió, la página sigue al sistema cuando este cambia
-  if (darkQuery.addEventListener) {
-    darkQuery.addEventListener("change", function (e) {
-      var saved = store.get("theme");
-      if (saved !== "light" && saved !== "dark") applyTheme(e.matches ? "dark" : "light");
-    });
-  }
 
   /* ------------------------------------------------------------------
      Menú móvil y navegación

@@ -7,7 +7,7 @@ Plain HTML, CSS and JavaScript: no framework and no build step. GitHub Pages ser
 ## Features
 
 - English and Spanish, with a toggle in the top bar. The first visit picks the browser's language.
-- Light and dark themes. The first visit follows the system setting.
+- Opens in light mode. The sun/moon button switches to dark mode and remembers the choice.
 - Animated header: a simulated cell embedding (decoration, not real data). It stays still when the system asks for reduced motion.
 - Works on phones, and is keyboard- and screen-reader-friendly.
 
@@ -28,4 +28,4 @@ assets/og-light.png preview image for links shared on social media
 - **Colours:** the tokens at the top of `assets/styles.css` (`--accent`, `--c1` … `--c5`).
 - **Preview:** open `index.html` in a browser, or run `python -m http.server` in this folder and visit http://localhost:8000.
 
-Changes pushed to `main` go live within a minute or two. When you change `styles.css` or `main.js`, also raise the number in `?v=5` where `index.html` links them (for example to `?v=6`). Otherwise browsers can keep the old file for up to 10 minutes.
+Changes pushed to `main` go live within a minute or two. When you change `styles.css` or `main.js`, also raise the number in `?v=6` where `index.html` links them (for example to `?v=7`). Otherwise browsers can keep the old file for up to 10 minutes.

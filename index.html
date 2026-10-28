@@ -6,8 +6,7 @@
   <title>Gabriel Leon · Microbiology & Bioinformatics</title>
   <meta name="description" content="Gabriel Leon — Microbiology and Bioanalysis student at the University of Antioquia (Colombia), using Python and R to study the host response to infection in public transcriptomic data.">
   <meta name="author" content="Gabriel Leon">
-  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1015" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f5f1">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Gabriel Leon · Microbiology & Bioinformatics">
@@ -24,17 +23,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=5">
+  <link rel="stylesheet" href="assets/styles.css?v=6">
 
   <script>
-    // Aplica tema e idioma antes de pintar, para evitar parpadeos
+    // Aplica tema e idioma antes de pintar, para evitar parpadeos.
+    // La página abre en modo claro; el oscuro solo si la persona lo eligió con el botón.
     (function () {
       var get = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
-      var theme = get("theme");
-      if (theme !== "light" && theme !== "dark") {
-        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
+      var theme = get("theme") === "dark" ? "dark" : "light";
       document.documentElement.dataset.theme = theme;
+      if (theme === "dark") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#0a0d12");
       var lang = get("lang") || ((navigator.language || "en").toLowerCase().indexOf("es") === 0 ? "es" : "en");
       document.documentElement.lang = lang;
     })();
@@ -314,6 +312,6 @@
     </div>
   </footer>
 
-  <script src="assets/main.js?v=5" defer></script>
+  <script src="assets/main.js?v=6" defer></script>
 </body>
 </html>
