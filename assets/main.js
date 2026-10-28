@@ -216,9 +216,7 @@
 
   /* ------------------------------------------------------------------
      Gráfico del encabezado: un "embedding" de células simulado.
-     Grupos de puntos que respiran despacio. El cursor los empuja y arrastra
-     de verdad (cada punto tiene velocidad), y un resorte suave los devuelve
-     poco a poco a su lugar cuando el cursor se va.
+     Grupos de puntos que respiran despacio y se apartan del cursor.
      ------------------------------------------------------------------ */
   var embedding = (function () {
     var canvas = document.getElementById("embedding");
@@ -226,21 +224,8 @@
     var ctx = canvas.getContext("2d");
     var W = 0, H = 0, dpr = 1;
     var points = [], clusters = [], colors = [];
-    var mouse = { x: -1e4, y: -1e4, px: 0, py: 0, active: false, fresh: true };
-    var running = false, visible = true, raf = 0, t0 = performance.now(), lastNow = 0;
-
-    // Física (valores pensados para 60 cuadros por segundo; se escalan con el tiempo real)
-    // Ajustados con una simulación: un golpe directo mueve un punto ~150 px, uno a 60 px
-    // de distancia ~40 px, y vuelven a su sitio en 3–4 s sin rebotar.
-    var REACH = 130;      // radio en px dentro del cual el cursor arrastra puntos
-    var CORE = 30;        // radio del "cuerpo" del cursor: los puntos no lo atraviesan
-    var DRAG = 0.15;      // cuánto del movimiento del cursor se transmite a los puntos
-    var PUSH = 0.7;       // empuje hacia afuera dentro del cuerpo del cursor
-    var SPRING = 0.0016;  // fuerza del resorte que devuelve cada punto (baja = regreso lento)
-    var STIFF = 130;      // a esta distancia el resorte ya es el doble de fuerte, como una liga:
-                          // así un empuje lento no se lleva el punto por toda la pantalla
-    var FRICTION = 0.9;   // rozamiento por cuadro (más bajo = se frenan antes)
-    var MAX_SPEED = 10;   // límite de velocidad de un punto, en px por cuadro
+    var mouse = { x: -1e4, y: -1e4 };
+    var running = false, visible = true, raf = 0, t0 = performance.now();
 
     // pseudoaleatorio con semilla, para que el dibujo sea el mismo en cada visita
     var seed = 20261028;
@@ -287,65 +272,36 @@
             r: 1.6 + rand() * 2.2,
             ph: rand() * 6.28,
             sp: 0.25 + rand() * 0.5,
-            dx: 0, dy: 0, vx: 0, vy: 0
+            dx: 0, dy: 0
           });
         }
       });
       // algunos puntos sueltos entre grupos
       for (var k = 0; k < 26; k++) {
         var cA = clusters[Math.floor(rand() * clusters.length)];
-        points.push({ c: cA, ox: gauss() * span * 0.22, oy: gauss() * span * 0.18, r: 1.4 + rand() * 1.2, ph: rand() * 6.28, sp: 0.3 + rand() * 0.4, dx: 0, dy: 0, vx: 0, vy: 0, stray: true });
+        points.push({ c: cA, ox: gauss() * span * 0.22, oy: gauss() * span * 0.18, r: 1.4 + rand() * 1.2, ph: rand() * 6.28, sp: 0.3 + rand() * 0.4, dx: 0, dy: 0, stray: true });
       }
     }
 
     function frame(now) {
       var t = (now - t0) / 1000;
-      // s = cuántos "cuadros de 60 fps" pasaron; así la física va igual a 30, 60 o 120 Hz
-      var s = lastNow ? Math.min((now - lastNow) / 16.667, 3) : 1;
-      lastNow = now;
       ctx.clearRect(0, 0, W, H);
-
-      // velocidad del cursor en este cuadro
-      var mvx = 0, mvy = 0;
-      if (mouse.active) {
-        if (mouse.fresh) { mouse.px = mouse.x; mouse.py = mouse.y; mouse.fresh = false; }
-        mvx = (mouse.x - mouse.px) / s; mvy = (mouse.y - mouse.py) / s;
-        mouse.px = mouse.x; mouse.py = mouse.y;
-        var ms = Math.sqrt(mvx * mvx + mvy * mvy);
-        if (ms > 60) { mvx *= 60 / ms; mvy *= 60 / ms; }
-      }
-      var R2 = REACH * REACH, fr = Math.pow(FRICTION, s);
-
+      var R = 110, R2 = R * R;
       for (var i = 0; i < points.length; i++) {
         var p = points[i], c = p.c;
         var breathe = 1 + 0.035 * Math.sin(t * 0.5 + c.ph);
         var bx = c.x + p.ox * breathe + Math.sin(t * p.sp + p.ph) * 3.2;
         var by = c.y + p.oy * breathe + Math.cos(t * p.sp * 0.9 + p.ph) * 3.2;
 
-        if (mouse.active) {
-          var mx = bx + p.dx - mouse.x, my = by + p.dy - mouse.y, d2 = mx * mx + my * my;
-          if (d2 < R2) {
-            var d = Math.sqrt(d2) || 1, f = 1 - d / REACH;
-            // el cursor les transmite su movimiento: los arrastra en la dirección en que se mueve
-            p.vx += mvx * f * f * DRAG * s;
-            p.vy += mvy * f * f * DRAG * s;
-            // y no deja que lo atraviesen: los empuja fuera de su cuerpo
-            if (d < CORE) {
-              var push = (1 - d / CORE) * PUSH * s;
-              p.vx += (mx / d) * push; p.vy += (my / d) * push;
-            }
-          }
+        // se apartan suavemente del cursor
+        var mx = bx - mouse.x, my = by - mouse.y, d2 = mx * mx + my * my;
+        var tx = 0, ty = 0;
+        if (d2 < R2) {
+          var d = Math.sqrt(d2) || 1, f = (1 - d / R) * 26;
+          tx = (mx / d) * f; ty = (my / d) * f;
         }
-
-        // resorte hacia su lugar (más firme cuanto más lejos está) + rozamiento
-        var off2 = p.dx * p.dx + p.dy * p.dy;
-        var k = SPRING * (1 + off2 / (STIFF * STIFF)) * s;
-        p.vx = (p.vx - p.dx * k) * fr;
-        p.vy = (p.vy - p.dy * k) * fr;
-        var v = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-        if (v > MAX_SPEED) { p.vx *= MAX_SPEED / v; p.vy *= MAX_SPEED / v; }
-        p.dx += p.vx * s;
-        p.dy += p.vy * s;
+        p.dx += (tx - p.dx) * 0.08;
+        p.dy += (ty - p.dy) * 0.08;
 
         ctx.globalAlpha = p.stray ? 0.35 : 0.78;
         ctx.fillStyle = colors[c.ci % colors.length];
@@ -359,10 +315,10 @@
 
     function start() {
       if (running || reduceMotion.matches || !visible) return;
-      running = true; lastNow = 0; raf = requestAnimationFrame(frame);
+      running = true; raf = requestAnimationFrame(frame);
     }
     function stop() { running = false; cancelAnimationFrame(raf); }
-    function still() { stop(); lastNow = 0; frame(t0 + 4000); }
+    function still() { stop(); frame(t0 + 4000); }
 
     readColors();
     layout();
@@ -377,13 +333,8 @@
     hero.addEventListener("pointermove", function (e) {
       var r = canvas.getBoundingClientRect();
       mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-      mouse.active = true;
     });
-    function release() { mouse.active = false; mouse.fresh = true; mouse.x = mouse.y = -1e4; }
-    hero.addEventListener("pointerleave", release);
-    // en pantallas táctiles el "cursor" desaparece al levantar el dedo
-    hero.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") release(); });
-    hero.addEventListener("pointercancel", release);
+    hero.addEventListener("pointerleave", function () { mouse.x = mouse.y = -1e4; });
 
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
